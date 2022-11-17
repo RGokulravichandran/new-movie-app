@@ -1,5 +1,6 @@
 import './App.css';
 import {useState} from 'react';
+import { hasFormSubmit } from '@testing-library/user-event/dist/utils';
 
 function App() {
   const movielist =[{
@@ -85,9 +86,10 @@ summary:
 ];
 
   return (
-    <div className="movielist">
-{ movielist.map((data)=> <Movie mv={data}/>)}
-    </div>
+//     <div className="movielist">
+// { movielist.map((data)=> <Movie mv={data}/>)}
+//     </div>
+<Addcolor />
   );
 }
 
@@ -122,5 +124,34 @@ const [dislike, setdislikecount] = useState(0);
   )
 }
 
-      
+
+function Addcolor(){
+  const [colorlist, setcolorlist]  = useState(["teal", "crimson", "orange"])
+
+  const [color, setcolor] = useState("");
+  const styles = {
+    background: color
+  }
+  return(
+    <div>
+      <input  style={styles} type= 'text' onChange={(event)=>setcolor(event.target.value)}></input>
+      <button onClick={()=>setcolorlist([...colorlist,color])} >Add Color</button>
+      {colorlist.map((clrs)=> (<Colorbox clr ={clrs} />))}
+    </div>
+   
+  )
+}
+
+function Colorbox({clr}){
+  const styles={
+    width : "250px",
+    height : "25px",
+    background: clr,
+    marginTop: "5px",
+  }
+  return(
+    <div style={styles}></div>
+  )
+}
+
 export default App;
