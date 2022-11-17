@@ -92,18 +92,21 @@ summary:
 }
 
 function Movie({mv}){
+  const styles ={  color: mv.rating < 8.5 ? 'red' : 'green'}
+
+  const [show, setShow] = useState(true);
+
   return(
         <div className='movie-container'>
             <img className='movie-poster' src={mv.poster}/>
             <div className='movie-spec'>
             <h3 className='movie-name'><b>{mv.name}</b></h3>
-            <p className='movie-rating'>⭐{mv.rating}</p>
-            <div className='movie-summary'>
-                <p>{mv.summary}</p>
-                <Count/>
-              </div>
+            <p style={styles} className='movie-rating'>⭐{mv.rating}</p>
+            </div>
+            <button onClick={() => setShow(!show)}>toggle summary</button>
+            {show ? <p className='movie-summary'> {mv.summary}</p> : null}
+            <Count/>
          </div>
-         </div> 
 )
       }
 
