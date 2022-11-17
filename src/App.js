@@ -1,4 +1,5 @@
 import './App.css';
+import {useState} from 'react';
 
 function App() {
   const movielist =[{
@@ -99,10 +100,24 @@ function Movie({mv}){
             <p className='movie-rating'>⭐{mv.rating}</p>
             <div className='movie-summary'>
                 <p>{mv.summary}</p>
+                <Count/>
               </div>
          </div>
          </div> 
 )
       }
 
+function Count(){
+const [like, setlikecount] = useState(0);
+const [dislike, setdislikecount] = useState(0);
+
+  return(
+    <div>
+      <button onClick={()=>setlikecount(like+1)}>👍{like}</button>
+      <button onClick={()=>setdislikecount(dislike+1)}>👎{dislike}</button>
+    </div>
+  )
+}
+
+      
 export default App;
