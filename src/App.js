@@ -1,10 +1,10 @@
 import './App.css';
 import {useState} from 'react';
-import { hasFormSubmit } from '@testing-library/user-event/dist/utils';
 
 function App() {
-  const movielist =[{
-
+  const initialmovielist = [
+    
+{
 name: "Vikram",
 poster:
 "https://m.media-amazon.com/images/M/MV5BMmJhYTYxMGEtNjQ5NS00MWZiLWEwN2ItYjJmMWE2YTU1YWYxXkEyXkFqcGdeQXVyMTEzNzg0Mjkx._V1_.jpg",
@@ -83,15 +83,58 @@ summary:
 "Remy, a rat, aspires to become a renowned French chef. However, he fails to realise that people despise rodents and will never enjoy a meal cooked by him.",
 
 }
-];
+]
+const [movieList, setmovieList] = useState(initialmovielist);
 
   return (
-//     <div className="movielist">
-// { movielist.map((data)=> <Movie mv={data}/>)}
-//     </div>
-<Addcolor />
-  );
+    <div className="App">
+    < AddmovieList movielist= {movieList} setmovieLists = {setmovieList}/>
+    </div>
+  )
 }
+
+function AddmovieList({movielist, setmovieLists}){
+
+
+  const [name, setname] = useState("");
+  const [poster, setposter] = useState("");
+  const [rating, setrating] = useState("");
+  const [summary, setsummary] = useState("");
+
+  const addnewmovie={
+    name:name,
+    poster:poster,
+    rating:rating,
+    summary:summary
+  }
+
+  return(
+    <div>
+            <div className='add-movie-container'>
+            <input type="text"placeholder='name' 
+            onChange={(event)=>setname(event.target.value)} />
+            {name}
+            <input type="text"placeholder='poster' 
+            onChange={(event)=>setposter(event.target.value)}/>
+            {poster}
+            <input type="text"placeholder='rating' 
+            onChange={(event)=>setrating(event.target.value)}/>
+            {rating}
+            <input type="text"placeholder='summary' 
+            onChange={(event)=>setsummary(event.target.value)}/>
+            {summary  }
+            <button onClick={()=>setmovieLists([...movielist, addnewmovie])} >Add Movie</button>
+            </div>
+        <div className="movielist">
+          { movielist.map((data)=> <Movie mv={data}/>)}
+        </div>
+    </div>
+
+        
+  )
+}
+
+
 
 function Movie({mv}){
   const styles ={  color: mv.rating < 8.5 ? 'red' : 'green'}
@@ -124,34 +167,5 @@ const [dislike, setdislikecount] = useState(0);
   )
 }
 
-
-function Addcolor(){
-  const [colorlist, setcolorlist]  = useState(["teal", "crimson", "orange"])
-
-  const [color, setcolor] = useState("");
-  const styles = {
-    background: color
-  }
-  return(
-    <div>
-      <input  style={styles} type= 'text' onChange={(event)=>setcolor(event.target.value)}></input>
-      <button onClick={()=>setcolorlist([...colorlist,color])} >Add Color</button>
-      {colorlist.map((clrs)=> (<Colorbox clr ={clrs} />))}
-    </div>
-   
-  )
-}
-
-function Colorbox({clr}){
-  const styles={
-    width : "250px",
-    height : "25px",
-    background: clr,
-    marginTop: "5px",
-  }
-  return(
-    <div style={styles}></div>
-  )
-}
 
 export default App;
