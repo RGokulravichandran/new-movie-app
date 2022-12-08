@@ -14,7 +14,6 @@ import { Pagenotfound } from './Pagenotfound';
 import { Home } from './Home';
 import ButtonAppBar from './Navbar';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 
 
@@ -120,6 +119,9 @@ const themeCtx = createTheme({
   },
 });
 
+fetch('https://63678f29f5f549f052d7b19a.mockapi.io/movies')
+   .then((data) => data.json())
+   .then((mvs)=>console.log(mvs));
 
   return (
     <ThemeProvider theme={themeCtx}>
