@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { Colorbox } from './Colorbox';
 
-function Addcolor() {
-  const [colorlist, setcolorlist] = useState(["teal", "crimson", "orange"]);
+ export function Addcolor() {
+
+  const colorlists = ["teal", "crimson", "orange"]
+
+  const [colorlist, setcolorlist] = useState(colorlists);
 
   const [color, setcolor] = useState("");
   const styles = {
@@ -14,6 +17,5 @@ function Addcolor() {
       <button onClick={() => setcolorlist([...colorlist, color])}>Add Color</button>
       {colorlist.map((clrs) => (<Colorbox clr={clrs} />))}
     </div>
-
   );
 }

@@ -8,10 +8,13 @@
 .movie-name {
     font-size: 24px;
     margin: 0;
+    min-height: "100vh";
 }
 
 .movie-container {
+    height: min-content;
     width: 400px;
+
 }
 
 .movie-spec {
@@ -19,6 +22,11 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    padding: 0 5px;
+}
+
+.movie-summary {
+    text-align: justify;
 }
 
 .movielist {

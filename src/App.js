@@ -1,7 +1,31 @@
 import './App.css';
 import {useState} from 'react';
+import { Route, Routes, Link, Navigate, useNavigate } from 'react-router-dom';
+import { Addcolor } from "./Addcolor"
+import IconButton from '@mui/material/IconButton';
+import Card from '@mui/material/Card';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import Addmovie from './Addmovie';
+import { Count } from './Count';
+import { Pagenotfound } from './Pagenotfound';
+import { Home } from './Home';
+import ButtonAppBar from './Navbar';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Paper from '@mui/material/Paper';
+
+
+
+
+
+
+
 
 function App() {
+
   const initialmovielist = [
     
 {
@@ -82,90 +106,79 @@ rating: 8,
 summary:
 "Remy, a rat, aspires to become a renowned French chef. However, he fails to realise that people despise rodents and will never enjoy a meal cooked by him.",
 
-}
-]
-const [movieList, setmovieList] = useState(initialmovielist);
+}]
+
+const [movielist, setmovieList] = useState(initialmovielist);
+
+const navigate = useNavigate();
+
+const [mode, setMode] = useState("dark")
+
+const themeCtx = createTheme({
+  palette: {
+    mode: mode,
+  },
+});
+
 
   return (
+    <ThemeProvider theme={themeCtx}>
+      <Paper
+      sx={{
+        minHeight: "100vh",
+        borderRadius: "0px",
+      }}
+      elevation={4}>
     <div className="App">
-    < AddmovieList movielist= {movieList} setmovieLists = {setmovieList}/>
-    </div>
-  )
-}
+      {<ButtonAppBar setMode={setMode} mode={mode} />}
 
-function AddmovieList({movielist, setmovieLists}){
+<Routes>
+      <Route path='/' element={<Home />}/>
+      <Route path='/colorgame' element={<Addcolor />}/>
+      <Route path='/movie/add' element={<Addmovie movielist= {movielist} setmovieList = {setmovieList} />}/>
+      <Route path='/movie' element={<AddmovieList movielist= {movielist}/>}/>
+      <Route path='/films' element={< Navigate replace to = '/movie'/>}/>
+      <Route path='*' element={<Pagenotfound />}/>
+</Routes>
+      
 
+      
+    </div> 
+    </Paper>
+    </ThemeProvider>
 
-  const [name, setname] = useState("");
-  const [poster, setposter] = useState("");
-  const [rating, setrating] = useState("");
-  const [summary, setsummary] = useState("");
+  )}
 
-  const addnewmovie={
-    name:name,
-    poster:poster,
-    rating:rating,
-    summary:summary
-  }
+function AddmovieList({movielist}){
 
   return(
-    <div>
-            <div className='add-movie-container'>
-            <input type="text"placeholder='name' 
-            onChange={(event)=>setname(event.target.value)} />
-            {name}
-            <input type="text"placeholder='poster' 
-            onChange={(event)=>setposter(event.target.value)}/>
-            {poster}
-            <input type="text"placeholder='rating' 
-            onChange={(event)=>setrating(event.target.value)}/>
-            {rating}
-            <input type="text"placeholder='summary' 
-            onChange={(event)=>setsummary(event.target.value)}/>
-            {summary  }
-            <button onClick={()=>setmovieLists([...movielist, addnewmovie])} >Add Movie</button>
-            </div>
-        <div className="movielist">
-          { movielist.map((data)=> <Movie mv={data}/>)}
-        </div>
-    </div>
-
-        
-  )
-}
-
-
+    <div className="movielist">
+        {movielist.map((data) => <Movie mv={data} />)}
+      </div>
+  )}
 
 function Movie({mv}){
+
   const styles ={  color: mv.rating < 8.5 ? 'red' : 'green'}
-
   const [show, setShow] = useState(true);
-
   return(
-        <div className='movie-container'>
+        <Card className='movie-container'>
             <img className='movie-poster' src={mv.poster}/>
+            <CardContent>
             <div className='movie-spec'>
-            <h3 className='movie-name'><b>{mv.name}</b></h3>
+            <h3 className='movie-name'><b>{mv.name}</b>
+            <IconButton color="primary" onClick={() => setShow(!show)} aria-label="Expand summary">
+            {show ? <ExpandMoreIcon/> : <ExpandLessIcon/>}
+            </IconButton></h3>
             <p style={styles} className='movie-rating'>⭐{mv.rating}</p>
             </div>
-            <button onClick={() => setShow(!show)}>toggle summary</button>
             {show ? <p className='movie-summary'> {mv.summary}</p> : null}
-            <Count/>
-         </div>
-)
-      }
-
-function Count(){
-const [like, setlikecount] = useState(0);
-const [dislike, setdislikecount] = useState(0);
-
-  return(
-    <div>
-      <button onClick={()=>setlikecount(like+1)}>👍{like}</button>
-      <button onClick={()=>setdislikecount(dislike+1)}>👎{dislike}</button>
-    </div>
-  )
-}
-
+           </CardContent>
+            <CardActions>
+              <Count/>
+            </CardActions>
+         </Card>
+         
+)}
 
 export default App;
