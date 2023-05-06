@@ -141,10 +141,7 @@ fetch('https://63678f29f5f549f052d7b19a.mockapi.io/movies')
       <Route path='/movie' element={<AddmovieList movielist= {movielist}/>}/>
       <Route path='/films' element={< Navigate replace to = '/movie'/>}/>
       <Route path='*' element={<Pagenotfound />}/>
-</Routes>
-      
-
-      
+</Routes>  
     </div> 
     </Paper>
     </ThemeProvider>
