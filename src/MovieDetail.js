@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from "@mui/material";
 
 function MovieDetail() {
   const { id } = useParams();
   const [Movie, setMovie] = useState({});
+  const navigate = useNavigate();
 
   fetch(`https://63678f29f5f549f052d7b19a.mockapi.io/movies/${id}`)
     .then((response) => response.json())
@@ -26,6 +28,11 @@ function MovieDetail() {
         <p className="movie-rating">⭐{Movie.rating}</p>
       </div>
       {Movie.summary}
+      <br />
+      <br />
+      <Button variant="contained" onClick={() => navigate(-1)}>
+        ⬅️Back
+      </Button>
     </div>
   );
 }
