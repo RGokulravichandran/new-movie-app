@@ -9,6 +9,7 @@ import ButtonAppBar from "./Navbar";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import MovieList from "./MovieList";
+import MovieDetail from "./MovieDetail";
 
 function App() {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ function App() {
             <Route path="/color-game" element={<Addcolor />} />
             <Route path="/movies/add" element={<Addmovie />} />
             <Route path="/movies" element={<MovieList />} />
+            <Route path="/movies/:id" element={<MovieDetail />} />
             <Route path="/films" element={<Navigate replace to="/movies" />} />
             <Route path="*" element={<Pagenotfound />} />
           </Routes>
