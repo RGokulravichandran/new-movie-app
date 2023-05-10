@@ -3,13 +3,13 @@ import { Movie } from "./Movie";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./App.css";
 import { IconButton } from "@mui/material";
-import { red } from "@mui/material/colors";
+import { API } from "./global";
 
 function MovieList() {
   const [movieList, setmovieList] = useState([]);
 
   const getMovies = () => {
-    fetch("https://63678f29f5f549f052d7b19a.mockapi.io/movies")
+    fetch(`${API}/movies`)
       .then((data) => data.json())
       .then((mvs) => setmovieList(mvs));
   };
@@ -19,7 +19,7 @@ function MovieList() {
   }, []);
 
   const deleteMovie = (id) => {
-    fetch(`https://63678f29f5f549f052d7b19a.mockapi.io/movies/${id}`, {
+    fetch(`${API}/movies/${id}`, {
       method: "DELETE",
     }).then(getMovies());
   };

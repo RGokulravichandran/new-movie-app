@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "./App.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
+import { API } from "./global";
 
 function MovieDetail() {
   const { id } = useParams();
   const [Movie, setMovie] = useState({});
   const navigate = useNavigate();
 
-  fetch(`https://63678f29f5f549f052d7b19a.mockapi.io/movies/${id}`)
+  fetch(`${API}/movies/${id}`)
     .then((response) => response.json())
     .then((data) => setMovie(data));
   return (
